@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Goa Tourism | Ticket Booking Experience</title>
+  <!-- Google Fonts + Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #f8faf4 0%, #eef2e6 100%);
+      color: #1e2a2e;
+      line-height: 1.5;
+      padding: 2rem 1rem;
+    }
+
+    /* main container */
+    .booking-container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* header section with goan vibe */
+    .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00695C, #FF8F00);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .hero h1 i {
+      background: none;
+      color: #FF8F00;
+      font-size: 2.2rem;
+      background-clip: unset;
+      -webkit-background-clip: unset;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #2c5f2d;
+      margin-top: 0.5rem;
+      font-weight: 500;
+      background: rgba(255,255,220,0.7);
+      display: inline-block;
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+    }
+
+    /* card style modern */
+    .booking-card {
+      background: rgba(255, 255, 245, 0.96);
+      backdrop-filter: blur(0px);
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255,215,140,0.3);
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 0;
+    }
+
+    /* left form panel */
+    .form-panel {
+      padding: 2rem 2rem 2rem 2rem;
+      background: #ffffffd9;
+      border-right: 1px solid #e9e2c7;
+    }
+
+    .summary-panel {
+      padding: 2rem;
+      background: #fffcf0;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      border-left: 5px solid #FF8F00;
+      padding-left: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title i {
+      color: #00695C;
+      font-size: 1.4rem;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-group label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #2c3e2f;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .input-group label i {
+      width: 1.4rem;
+      color: #FF8F00;
+    }
+
+    input, select, textarea {
+      padding: 0.9rem 1rem;
+      border-radius: 1rem;
+      border: 1.5px solid #e0d6b0;
+      background: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #FF8F00;
+      box-shadow: 0 0 0 3px rgba(255,143,0,0.2);
+    }
+
+    .extras-group {
+      background: #fef7e0;
+      padding: 1rem 1.2rem;
+      border-radius: 1.2rem;
+      margin: 1rem 0 1.2rem 0;
+    }
+
+    .extras-title {
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+      color: #5a3e1b;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+      cursor: pointer;
+    }
+
+    .checkbox-item input {
+      width: 1.2rem;
+      height: 1.2rem;
+      accent-color: #00695C;
+    }
+
+    .btn-book {
+      background: linear-gradient(100deg, #00695C, #028a6e);
+      border: none;
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: white;
+      border-radius: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 0.5rem;
+      box-shadow: 0 4px 10px rgba(0,105,92,0.3);
+    }
+
+    .btn-book:hover {
+      background: linear-gradient(100deg, #005046, #026e57);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px -8px rgba(0,105,92,0.5);
+    }
+
+    /* summary panel */
+    .price-detail {
+      background: #fff6e5;
+      border-radius: 1.5rem;
+      padding: 1.2rem;
+      margin: 1.2rem 0;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px dashed #eedfa0;
+    }
+
+    .price-row.total {
+      border-bottom: none;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: #00695C;
+      margin-top: 0.5rem;
+      padding-top: 0.7rem;
+      border-top: 2px solid #ffcd7e;
+    }
+
+    .summary-highlight {
+      font-size: 0.9rem;
+      background: #e9f5e9;
+      border-radius: 1rem;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .success-message {
+      background: #dff0e2;
+      border-left: 6px solid #2e7d32;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-top: 1.5rem;
+      display: none;
+      align-items: center;
+      gap: 0.8rem;
+      font-weight: 500;
+    }
+
+    .success-message i {
+      font-size: 1.8rem;
+      color: #2e7d32;
+    }
+
+    .error-text {
+      font-size: 0.75rem;
+      color: #d32f2f;
+      margin-top: 0.3rem;
+      display: none;
+    }
+
+    @media (max-width: 780px) {
+      .grid-2col {
+        grid-template-columns: 1fr;
+      }
+      .form-panel {
+        border-right: none;
+        border-bottom: 1px solid #e9e2c7;
+      }
+      .hero h1 {
+        font-size: 1.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="booking-container">
+  <div class="hero">
+    <h1>
+      <i class="fas fa-umbrella-beach"></i> 
+      Goa Tourism · Ticket Booking
+      <i class="fas fa-ship"></i>
+    </h1>
+    <p><i class="fas fa-map-marker-alt"></i> Sun, Sand & Soul — Secure Your Goan Escape</p>
+  </div>
+
+  <div class="booking-card">
+    <div class="grid-2col">
+      <!-- LEFT: Booking Form -->
+      <div class="form-panel">
+        <div class="section-title">
+          <i class="fas fa-ticket-alt"></i> 
+          <span>Book your experience</span>
+        </div>
+
+        <form id="bookingForm">
+          <div class="input-group">
+            <label><i class="fas fa-user-circle"></i> Full Name *</label>
+            <input type="text" id="fullName" placeholder="e.g., Riya Sharma" required>
+            <div class="error-text" id="nameError">Please enter your full name</div>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-envelope"></i> Email Address *</label>
+            <input type="email" id="email" placeholder="hello@example.com" required>
+            <div class="error-text" id="emailError">Valid email required</div>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-phone-alt"></i> Phone Number *</label>
+            <input type="tel" id="phone" placeholder="+91 98765 43210" required>
+            <div class="error-text" id="phoneError">10-digit mobile number</div>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-calendar-alt"></i> Travel Date *</label>
+            <input type="date" id="travelDate" required>
+            <div class="error-text" id="dateError">Select a future travel date</div>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-map"></i> Choose Package *</label>
+            <select id="packageSelect">
+              <option value="1500">🏖️ Beach Hopping & Sunset Cruise – ₹1500 / person</option>
+              <option value="2500">💦 Water Sports Adventure (Jet Ski, Banana) – ₹2500 / person</option>
+              <option value="1800">⛪ Old Goa Churches & Spice Farm – ₹1800 / person</option>
+              <option value="2200">🌊 Dudhsagar Waterfall Trek – ₹2200 / person</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-users"></i> Number of Travelers *</label>
+            <input type="number" id="quantity" min="1" max="20" value="1" step="1">
+          </div>
+
+          <div class="extras-group">
+            <div class="extras-title"><i class="fas fa-plus-circle"></i> Enhance your trip (per person)</div>
+            <label class="checkbox-item">
+              <input type="checkbox" id="guideExtra" value="300"> 
+              <span>🎤 Guided Local Expert + ₹300 / person</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" id="mealExtra" value="400"> 
+              <span>🍛 Authentic Goan Lunch + ₹400 / person</span>
+            </label>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-comment-dots"></i> Special Requests (optional)</label>
+            <textarea rows="2" id="specialRequest" placeholder="Any dietary preferences / accessibility needs..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-book">
+            <i class="fas fa-check-circle"></i> Confirm Booking
+          </button>
+        </form>
+        <div id="formFeedback"></div>
+      </div>
+
+      <!-- RIGHT: Price Summary & Details -->
+      <div class="summary-panel">
+        <div class="section-title">
+          <i class="fas fa-receipt"></i>
+          <span>Your Trip Summary</span>
+        </div>
+
+        <div class="price-detail">
+          <div class="price-row">
+            <span><i class="fas fa-tag"></i> Selected package (per person)</span>
+            <span id="packagePriceDisplay">₹1500</span>
+          </div>
+          <div class="price-row">
+            <span><i class="fas fa-layer-group"></i> Extras (per person)</span>
+            <span id="extrasTotalDisplay">₹0</span>
+          </div>
+          <div class="price-row">
+            <span><i class="fas fa-user-friends"></i> Travelers</span>
+            <span id="qtyDisplay">1</span>
+          </div>
+          <div class="price-row total">
+            <span><i class="fas fa-rupee-sign"></i> <strong>Total Amount</strong></span>
+            <span id="grandTotalDisplay"><strong>₹1500</strong></span>
+          </div>
+        </div>
+
+        <div class="summary-highlight">
+          <i class="fas fa-clock"></i> Instant confirmation · No hidden charges<br>
+          <i class="fas fa-shield-alt"></i> Secure booking | Free cancellation (7 days prior)
+        </div>
+
+        <div id="liveBookingInfo" style="margin-top: 1rem; font-size: 0.85rem; background: #f5efe2; border-radius: 1rem; padding: 0.8rem; text-align: center;">
+          <i class="fas fa-info-circle"></i> Package inclusions: as per selected tour.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // DOM elements
+  const packageSelect = document.getElementById('packageSelect');
+  const quantityInput = document.getElementById('quantity');
+  const guideCheck = document.getElementById('guideExtra');
+  const mealCheck = document.getElementById('mealExtra');
+  const packagePriceDisplay = document.getElementById('packagePriceDisplay');
+  const extrasTotalDisplay = document.getElementById('extrasTotalDisplay');
+  const grandTotalSpan = document.getElementById('grandTotalDisplay');
+  const qtyDisplaySpan = document.getElementById('qtyDisplay');
+
+  // Helper to get current package base price (number)
+  function getPackagePrice() {
+    return parseInt(packageSelect.value, 10);
+  }
+
+  // Get extras total per person
+  function getExtrasPerPerson() {
+    let extras = 0;
+    if (guideCheck.checked) extras += 300;
+    if (mealCheck.checked) extras += 400;
+    return extras;
+  }
+
+  // Update all summary values and total
+  function updateTotals() {
+    let packagePrice = getPackagePrice();
+    let extrasPP = getExtrasPerPerson();
+    let quantity = parseInt(quantityInput.value, 10);
+    if (isNaN(quantity) || quantity < 1) quantity = 1;
+    
+    const perPersonTotal = packagePrice + extrasPP;
+    const finalTotal = perPersonTotal * quantity;
+    
+    // Update UI
+    packagePriceDisplay.innerText = `₹${packagePrice}`;
+    extrasTotalDisplay.innerText = `₹${extrasPP}`;
+    qtyDisplaySpan.innerText = quantity;
+    grandTotalSpan.innerHTML = `<strong>₹${finalTotal.toLocaleString('en-IN')}</strong>`;
+    
+    // also show per person total in tooltip style? just for clarity
+    const summaryHighlightDiv = document.querySelector('.summary-highlight');
+    if (summaryHighlightDiv && !document.getElementById('perPersonHint')) {
+      // optional hint, not necessary
+    }
+  }
+  
+  // Recalculate on any change
+  packageSelect.addEventListener('change', updateTotals);
+  quantityInput.addEventListener('input', function() {
+    let val = parseInt(this.value, 10);
+    if (isNaN(val) || val < 1) this.value = 1;
+    if (val > 20) this.value = 20;
+    updateTotals();
+  });
+  guideCheck.addEventListener('change', updateTotals);
+  mealCheck.addEventListener('change', updateTotals);
+  
+  // Additional validation helpers
+  function validateForm() {
+    let isValid = true;
+    const name = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const travelDate = document.getElementById('travelDate').value;
+    
+    // Name validation
+    if (name === "") {
+      document.getElementById('nameError').style.display = 'block';
+      isValid = false;
+    } else {
+      document.getElementById('nameError').style.display = 'none';
+    }
+    
+    // Email regex
+    const emailPattern = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
+    if (email === "" || !emailPattern.test(email)) {
+      document.getElementById('emailError').style.display = 'block';
+      isValid = false;
+    } else {
+      document.getElementById('emailError').style.display = 'none';
+    }
+    
+    // Phone: allow +91 or 10 digits
+    const phoneClean = phone.replace(/\D/g, '');
+    if (phoneClean.length !== 10 || phoneClean.length === 0) {
+      document.getElementById('phoneError').style.display = 'block';
+      isValid = false;
+    } else {
+      document.getElementById('phoneError').style.display = 'none';
+    }
+    
+    // Date validation: not in past
+    if (travelDate === "") {
+      document.getElementById('dateError').innerText = 'Please select travel date';
+      document.getElementById('dateError').style.display = 'block';
+      isValid = false;
+    } else {
+      const selected = new Date(travelDate);
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      if (selected < today) {
+        document.getElementById('dateError').innerText = 'Travel date cannot be in the past';
+        document.getElementById('dateError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('dateError').style.display = 'none';
+      }
+    }
+    
+    return isValid;
+  }
+  
+  // create a floating success message inside summary panel or form feedback
+  function showSuccessMessage(bookingDetails) {
+    // remove previous success message if exists
+    let existingMsg = document.getElementById('customSuccessMsg');
+    if (existingMsg) existingMsg.remove();
+    
+    const successDiv = document.createElement('div');
+    successDiv.id = 'customSuccessMsg';
+    successDiv.className = 'success-message';
+    successDiv.style.display = 'flex';
+    successDiv.innerHTML = `
+      <i class="fas fa-check-circle"></i>
+      <div>
+        <strong>✨ Booking Confirmed! ✨</strong><br>
+        ${bookingDetails.name}, your ${bookingDetails.packageName} for ${bookingDetails.travelers} traveler(s) on ${bookingDetails.date} is booked.<br>
+        Total: ₹${bookingDetails.total}. Confirmation sent to ${bookingDetails.email}.
+      </div>
+    `;
+    // Append to summary panel for visibility
+    const summaryPanel = document.querySelector('.summary-panel');
+    summaryPanel.appendChild(successDiv);
+    
+    // auto scroll and auto remove after 7 seconds? keep user happy
+    setTimeout(() => {
+      if (successDiv) successDiv.style.opacity = '0.8';
+      setTimeout(() => {
+        if (successDiv) successDiv.remove();
+      }, 5000);
+    }, 4000);
+  }
+  
+  // map package text from selected option
+  function getPackageName() {
+    const selectedOption = packageSelect.options[packageSelect.selectedIndex];
+    return selectedOption.text.split('–')[0].trim();
+  }
+  
+  // main booking submission
+  const form = document.getElementById('bookingForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      // scroll to error
+      const firstError = document.querySelector('.error-text[style*="display: block"]');
+      if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    
+    const name = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const travelDate = document.getElementById('travelDate').value;
+    const quantity = parseInt(quantityInput.value, 10);
+    const packageName = getPackageName();
+    const packagePriceVal = getPackagePrice();
+    const extrasPP = getExtrasPerPerson();
+    const totalPer = packagePriceVal + extrasPP;
+    const totalAmount = totalPer * quantity;
+    const specialRequest = document.getElementById('specialRequest').value;
+    
+    // extras labels to show
+    let extrasList = [];
+    if (guideCheck.checked) extrasList.push("Guide Service");
+    if (mealCheck.checked) extrasList.push("Goan Lunch");
+    const extrasText = extrasList.length ? extrasList.join(", ") : "None";
+    
+    // Booking detail object (store in console)
+    const bookingData = {
+      bookingId: 'GOA-' + Math.floor(Math.random() * 1000000),
+      name: name,
+      email: email,
+      phone: phone,
+      travelDate: travelDate,
+      package: packageName,
+      travelers: quantity,
+      extras: extrasText,
+      specialRequest: specialRequest || "—",
+      total: totalAmount.toLocaleString('en-IN'),
+      status: "Confirmed"
+    };
+    
+    console.log("✅ NEW BOOKING:", bookingData);
+    
+    // display beautiful confirmation
+    showSuccessMessage({
+      name: name,
+      email: email,
+      packageName: packageName,
+      travelers: quantity,
+      date: travelDate,
+      total: totalAmount.toLocaleString('en-IN')
+    });
+    
+    // optional: reset form? better not reset but we can mark as "booking added"
+    // just optionally clear special request but keep user data? we don't want to reset entire form.
+    // but provide clear feedback: we also can show in summary panel too.
+    
+    // subtle animation: highlight total
+    const totalSpan = document.getElementById('grandTotalDisplay');
+    totalSpan.style.transform = 'scale(1.05)';
+    setTimeout(() => { totalSpan.style.transform = ''; }, 300);
+    
+    // small extra: disable submit briefly to avoid double booking flash
+    const btn = document.querySelector('.btn-book');
+    btn.disabled = true;
+    setTimeout(() => { btn.disabled = false; }, 1500);
+  });
+  
+  // initial update totals and set min travel date
+  window.addEventListener('DOMContentLoaded', () => {
+    updateTotals();
+    // set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('travelDate').setAttribute('min', today);
+    
+    // additional live phone formatting just for ux (optional)
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function(e) {
+      let val = this.value.replace(/\D/g, '');
+      if (val.length > 10) val = val.slice(0,10);
+      this.value = val;
+    });
+  });
+  
+  // Also update quantity display realtime
+  quantityInput.addEventListener('change', updateTotals);
+</script>
+</body>
+</html>
