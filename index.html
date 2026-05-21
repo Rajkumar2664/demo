@@ -1,0 +1,33 @@
+<VirtualHost *:443>
+    ServerName example.com
+    ServerAlias www.example.com
+
+    # Paths to your certificate and private key
+    SSLEngine on
+    SSLCertificateFile      /etc/letsencrypt/live/example.com/fullchain.pem
+    SSLCertificateKeyFile   /etc/letsencrypt/live/example.com/privkey.pem
+
+    # (Optional) Intermediate DH parameters for stronger security
+    # SSLCertificateChainFile /etc/letsencrypt/live/example.com/chain.pem
+    SSLOptions +StrictRequire
+
+    # Modern TLS configuration (recommended)
+    SSLProtocol             all -SSLv3 -TLSv1 -TLSv1.1
+    SSLCipherSuite          ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384
+    SSLHonorCipherOrder     on
+
+    # Document root – change to your application's public folder
+    DocumentRoot /var/www/html
+
+    <Directory /var/www/html>
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    # Logging (adjust paths as needed)
+    ErrorLog  /var/log/httpd/example-error.log
+    CustomLog /var/log/httpd/example-access.log combined
+
+    # Optional: Redirect HTTP to HTTPS is handled in a separate port 80 block
+</VirtualHost>
